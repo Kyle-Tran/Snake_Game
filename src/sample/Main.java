@@ -18,6 +18,7 @@ import java.util.Random;
 
 public class Main extends Application {
     static int speed = 5;
+    static int score = -1;
     static int width = 20;
     static int height = 20;
     static int foodX = 0;
@@ -71,16 +72,16 @@ public class Main extends Application {
 
             //Arrow Key Controls
             scene.addEventFilter(KeyEvent.KEY_PRESSED, key->{
-                if (key.getCode() == KeyCode.W || key.getCode() == KeyCode.KP_UP){
+                if (!(direction == Dir.down) && (key.getCode() == KeyCode.W || key.getCode() == KeyCode.UP)){
                     direction = Dir.up;
                 }
-                if (key.getCode() == KeyCode.A || key.getCode() == KeyCode.KP_LEFT){
+                if (!(direction == Dir.right) && (key.getCode() == KeyCode.A || key.getCode() == KeyCode.LEFT)){
                     direction = Dir.left;
                 }
-                if (key.getCode() == KeyCode.S || key.getCode() == KeyCode.KP_DOWN){
+                if (!(direction == Dir.up) && (key.getCode() == KeyCode.S || key.getCode() == KeyCode.DOWN)){
                     direction = Dir.down;
                 }
-                if (key.getCode() == KeyCode.D || key.getCode() == KeyCode.KP_RIGHT){
+                if (!(direction == Dir.left) && (key.getCode() == KeyCode.D || key.getCode() == KeyCode.RIGHT)){
                     direction = Dir.right;
                 }
             });
@@ -90,9 +91,6 @@ public class Main extends Application {
             snake.add(new Corner(width/2,height/2));
             snake.add(new Corner(width/2,height/2));
 
-            /*scene.getStylesheets().add(getClass()
-                    .getResource("application.css")
-                    .toExternalForm());*/
             primaryStage.setScene(scene);
             primaryStage.setTitle("SNAKE");
             primaryStage.show();
@@ -154,9 +152,7 @@ public class Main extends Application {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, width * cornersize, height * cornersize);
 
-        gc.setFill(Color.WHITE);
-        gc.setFont(new Font("",30));
-        gc.fillText("Score: ",+(speed-6),10,30);
+
 
         //Food color
         gc.setFill(Color.RED);
@@ -169,6 +165,10 @@ public class Main extends Application {
             gc.setFill(Color.GREEN);
             gc.fillRect(c.x * cornersize, c.y * cornersize, cornersize-2, cornersize-2);
         }
+
+        gc.setFill(Color.WHITE);
+        gc.setFont(new Font("",30));
+        gc.fillText("Score: "+score,10,30);
     }
 
     //Creates food
@@ -184,10 +184,10 @@ public class Main extends Application {
             }
             //foodcolor = rand.nextInt(5);
             //speed++;
+            score++;
             break;
         }
     }
-
 
     public static void main(String[] args) {
         launch(args);
