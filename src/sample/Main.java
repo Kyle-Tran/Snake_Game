@@ -169,6 +169,8 @@ public class Main extends Application {
         gc.setFill(Color.WHITE);
         gc.setFont(new Font("",30));
         gc.fillText("Score: "+score,10,30);
+
+        
     }
 
     //Creates food
